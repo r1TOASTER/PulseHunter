@@ -14,7 +14,7 @@ void* _ulong_ec_malloc(ULONG size) {
 }
 
 void* _dword_ec_malloc(DWORD size) {
-    auto ret = malloc(size);
+    auto ret = malloc(static_cast<std::size_t>(size));
     if (ret == nullptr) {
         _fatal("Failed to malloc memory for the size: " + size);
     }
