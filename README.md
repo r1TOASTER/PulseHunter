@@ -17,7 +17,7 @@ g++ -fdiagnostics-color=always -g -Wall -pedantic -Werror ${workspaceFolder}\\sr
 This command will generate an executable file named PulseHunter.exe in the bin folder.
 ## Usage
 
-To use PulseHunter, simply run the executable file and follow the prompts. The program currently allows you to check the status of a port on a given IP address.
+To use PulseHunter, simply run the executable file and follow the prompts. The program currently allows you to check the open ports running on your pc (UDP and TCP).
 
 Future updates to the program will include:
 
