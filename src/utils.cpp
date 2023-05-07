@@ -20,7 +20,6 @@ void* _dword_ec_malloc(DWORD size) {
     }
     return ret;
 }
-<<<<<<< HEAD
 
 std::string _port_state_to_string(PortState port_state) {
     switch (port_state) {
@@ -66,5 +65,3 @@ std::string _port_state_to_string(PortState port_state) {
     }
     return "Unknown";
 }
-=======
->>>>>>> f06900ac53c2e6f5146a5baffd0be8e564384165
