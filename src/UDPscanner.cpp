@@ -1,23 +1,30 @@
 #include "headers/UDPscanner.hpp"
 
-PMIB_UDPTABLE UDP_scanner::Get_UDP_Table(bool order) {
+[[nodiscard]] UDP_scanner::UDP_scanner(bool order) noexcept {
     
     PMIB_UDPTABLE return_table_as_raw;
-    ULONG ulSize = 0;
+    DWORD dwSize = 0;
 
     // getting the table's size
-    auto ResultForSizeOfPointer = GetUdpTable(nullptr, &ulSize, order);
+    auto ResultForSizeOfPointer = GetUdpTable(nullptr, &dwSize, order);
     if (ResultForSizeOfPointer != ERROR_INSUFFICIENT_BUFFER) {
-        _fatal("Failed to get UDP table for it's size");
+        _fatal("Failed to get TCP table for it's size");
     }
 
     // mallocing the size, and getting the table
-    return_table_as_raw = (PMIB_UDPTABLE) _ulong_ec_malloc(ulSize); 
-    auto ResultUdpTable = GetUdpTable(return_table_as_raw, &ulSize, order);
-    if (ResultUdpTable != NO_ERROR) {
-        _fatal("Failed to get UDP table after successfully retrieving it's size");
+    return_table_as_raw = (PMIB_UDPTABLE) _dword_ec_malloc(dwSize); 
+    auto ResultTcpTable = GetUdpTable(return_table_as_raw, &dwSize, order);
+    if (ResultTcpTable != NO_ERROR) {
+        _fatal("Failed to get TCP table after successfully retrieving it's size");
     }
 
     // returning the table
-    return return_table_as_raw;
+    _UdpTableHolder = std::make_unique<MIB_UDPTABLE>(*return_table_as_raw);
+}
+
+void UDP_scanner::print_ports() const noexcept {
+    for (int i = 0; i < static_cast<int>(_UdpTableHolder->dwNumEntries); i++) {
+        MIB_UDPROW* pUdpRow = &_UdpTableHolder->table[i];
+        printf("(UDP) Port %u is open\n", ntohs(pUdpRow->dwLocalPort));
+    }
 }

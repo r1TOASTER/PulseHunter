@@ -20,3 +20,48 @@ void* _dword_ec_malloc(DWORD size) {
     }
     return ret;
 }
+
+std::string _port_state_to_string(PortState port_state) {
+    switch (port_state) {
+        case PortState::Closed:
+            return "Closed";
+            break;
+        case PortState::Listen:
+            return "Listening";
+            break;
+        case PortState::SYN_sent:
+            return "SYN_sent";
+            break;
+        case PortState::SYN_received:
+            return "SYN_received";
+            break;
+        case PortState::Established:
+            return "Established";
+            break;
+        case PortState::FIN_wait1:
+            return "FIN_wait1";
+            break;
+        case PortState::FIN_wait2:
+            return "FIN_wait2";
+            break;
+        case PortState::Close_wait:
+            return "Close_wait";
+            break;
+        case PortState::Closing:
+            return "Closing";
+            break;
+        case PortState::Last_ACK:
+            return "Last_ACK";
+            break;
+        case PortState::Time_wait:
+            return "Time_wait";
+            break;
+        case PortState::Delete_TCB:
+            return "Delete_TCB";
+            break;
+        case PortState::ALL:
+            return "ALL";
+            break;
+    }
+    return "Unknown";
+}

@@ -1,7 +1,7 @@
 #include "headers/TCPscanner.hpp"
 #include <iostream>
 
-PMIB_TCPTABLE TCP_scanner::Get_TCP_Table(bool order) {
+[[nodiscard]] TCP_scanner::TCP_scanner(bool order) noexcept {
     
     PMIB_TCPTABLE return_table_as_raw;
     DWORD dwSize = 0;
@@ -20,5 +20,17 @@ PMIB_TCPTABLE TCP_scanner::Get_TCP_Table(bool order) {
     }
 
     // returning the table
-    return return_table_as_raw;
+    _TcpTableHolder = std::make_unique<MIB_TCPTABLE>(*return_table_as_raw);
+}
+
+void TCP_scanner::print_ports(PortState port_state) const noexcept {
+    for (int i = 0; i < static_cast<int>(_TcpTableHolder->dwNumEntries); i++) {
+        MIB_TCPROW* pTcpRow = &_TcpTableHolder->table[i];
+        if (port_state == PortState::ALL) {
+            printf("(TCP) Port %u is in the state: %s\n", ntohs(pTcpRow->dwLocalPort), _port_state_to_string((PortState) pTcpRow->dwState).c_str());
+        }
+        else if (pTcpRow->dwState == (DWORD) port_state) {
+            printf("(TCP) Port %u is in the state: %s\n", ntohs(pTcpRow->dwLocalPort), _port_state_to_string(port_state).c_str());
+        }
+    }
 }
