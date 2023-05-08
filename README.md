@@ -1,6 +1,6 @@
 # PulseHunter
 
-PulseHunter is a network tool for examining ports on a given IP address. It allows you to check whether a specific port is open or closed.
+PulseHunter is a network tool for examining ports.
 ## Compiling
 
 To compile PulseHunter, you will need a C++ compiler and the **iphlpapi** and **ws2_32** libraries.
