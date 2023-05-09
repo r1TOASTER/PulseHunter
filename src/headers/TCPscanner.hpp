@@ -10,5 +10,5 @@ class TCP_scanner {
         [[nodiscard]] TCP_scanner(bool order) noexcept;
         void print_ports(PortState port_state) const noexcept;
     private:
-        std::unique_ptr<MIB_TCPTABLE> _TcpTableHolder;
+        std::unique_ptr<PMIB_TCPTABLE> _TcpTableHolder;
 };

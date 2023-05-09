@@ -5,20 +5,20 @@
 #include <string>
 #include <Windows.h>
 
-enum class PortState {
-    Closed = 1,
-    Listen,
-    SYN_sent,
-    SYN_received,
-    Established,
-    FIN_wait1,
-    FIN_wait2,
-    Close_wait,
-    Closing,
-    Last_ACK,
-    Time_wait,
-    Delete_TCB,
-    ALL,
+enum class PortState : DWORD {
+    CLOSED     =  0x00000001,
+    LISTEN     =  0x00000002,
+    SYN_SENT   =  0x00000003,
+    SYN_RECEIVED =  0x00000004,
+    ESTABLISHED =  0x00000005,
+    FIN_WAIT1  =  0x00000006,
+    FIN_WAIT2  =  0x00000007,
+    CLOSE_WAIT =  0x00000008,
+    CLOSING    =  0x00000009,
+    LAST_ACK   = 0x0000000A,
+    TIME_WAIT  = 0x0000000B,
+    DELETE_TCB = 0x0000000C,
+    ALL = 0x0000000D,
 };
 
 extern void _fatal(const std::string msg);

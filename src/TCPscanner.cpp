@@ -20,16 +20,17 @@
     }
 
     // returning the table
-    _TcpTableHolder = std::make_unique<MIB_TCPTABLE>(*return_table_as_raw);
+    _TcpTableHolder = std::make_unique<PMIB_TCPTABLE>(return_table_as_raw);
 }
 
 void TCP_scanner::print_ports(PortState port_state) const noexcept {
-    for (int i = 0; i < static_cast<int>(_TcpTableHolder->dwNumEntries); i++) {
-        MIB_TCPROW* pTcpRow = &_TcpTableHolder->table[i];
+    auto raw = *(_TcpTableHolder);
+    for (int i = 0; i < static_cast<int>(raw->dwNumEntries); ++i) {
+        MIB_TCPROW* pTcpRow = &(raw->table[i]);
         if (port_state == PortState::ALL) {
-            printf("(TCP) Port %u is in the state: %s\n", ntohs(pTcpRow->dwLocalPort), _port_state_to_string((PortState) pTcpRow->dwState).c_str());
+            printf("(TCP) Port %u is in the state: %s\n", ntohs(pTcpRow->dwLocalPort), _port_state_to_string(static_cast<PortState>(pTcpRow->dwState)).c_str());
         }
-        else if (pTcpRow->dwState == (DWORD) port_state) {
+        else if (pTcpRow->dwState == static_cast<DWORD>(port_state)) {
             printf("(TCP) Port %u is in the state: %s\n", ntohs(pTcpRow->dwLocalPort), _port_state_to_string(port_state).c_str());
         }
     }

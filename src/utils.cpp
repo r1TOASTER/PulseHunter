@@ -23,41 +23,41 @@ void* _dword_ec_malloc(DWORD size) {
 
 std::string _port_state_to_string(PortState port_state) {
     switch (port_state) {
-        case PortState::Closed:
-            return "Closed";
+        case PortState::CLOSED:
+            return "CLOSED";
             break;
-        case PortState::Listen:
-            return "Listening";
+        case PortState::LISTEN:
+            return "LISTEN";
             break;
-        case PortState::SYN_sent:
-            return "SYN_sent";
+        case PortState::SYN_SENT:
+            return "SYN_SENT";
             break;
-        case PortState::SYN_received:
-            return "SYN_received";
+        case PortState::SYN_RECEIVED:
+            return "SYN_RECEIVED";
             break;
-        case PortState::Established:
-            return "Established";
+        case PortState::ESTABLISHED:
+            return "ESTABLISHED";
             break;
-        case PortState::FIN_wait1:
-            return "FIN_wait1";
+        case PortState::FIN_WAIT1:
+            return "FIN_WAIT1";
             break;
-        case PortState::FIN_wait2:
-            return "FIN_wait2";
+        case PortState::FIN_WAIT2:
+            return "FIN_WAIT2";
             break;
-        case PortState::Close_wait:
-            return "Close_wait";
+        case PortState::CLOSE_WAIT:
+            return "CLOSE_WAIT";
             break;
-        case PortState::Closing:
-            return "Closing";
+        case PortState::CLOSING:
+            return "CLOSING";
             break;
-        case PortState::Last_ACK:
-            return "Last_ACK";
+        case PortState::LAST_ACK:
+            return "LAST_ACK";
             break;
-        case PortState::Time_wait:
-            return "Time_wait";
+        case PortState::TIME_WAIT:
+            return "TIME_WAIT";
             break;
-        case PortState::Delete_TCB:
-            return "Delete_TCB";
+        case PortState::DELETE_TCB:
+            return "DELETE_TCB";
             break;
         case PortState::ALL:
             return "ALL";

@@ -19,12 +19,13 @@
     }
 
     // returning the table
-    _UdpTableHolder = std::make_unique<MIB_UDPTABLE>(*return_table_as_raw);
+    _UdpTableHolder = std::make_unique<PMIB_UDPTABLE>(return_table_as_raw);
 }
 
 void UDP_scanner::print_ports() const noexcept {
-    for (int i = 0; i < static_cast<int>(_UdpTableHolder->dwNumEntries); i++) {
-        MIB_UDPROW* pUdpRow = &_UdpTableHolder->table[i];
+    auto raw = *(_UdpTableHolder);
+    for (int i = 0; i < static_cast<int>(raw->dwNumEntries); i++) {
+        MIB_UDPROW* pUdpRow = &(raw->table[i]);
         printf("(UDP) Port %u is open\n", ntohs(pUdpRow->dwLocalPort));
     }
 }

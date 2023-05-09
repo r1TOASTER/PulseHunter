@@ -10,5 +10,5 @@ class UDP_scanner {
         [[nodiscard]] UDP_scanner(bool order) noexcept;
         void print_ports() const noexcept;
     private:
-        std::unique_ptr<MIB_UDPTABLE> _UdpTableHolder;
+        std::unique_ptr<PMIB_UDPTABLE> _UdpTableHolder;
 };
