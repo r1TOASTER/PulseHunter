@@ -1,5 +1,9 @@
 #include "headers/UDPscanner.hpp"
 
+UDP_scanner::~UDP_scanner() noexcept {
+    free(_UdpTableHolder.release());
+}
+
 [[nodiscard]] UDP_scanner::UDP_scanner(bool order) noexcept {
     
     PMIB_UDPTABLE return_table_as_raw;
