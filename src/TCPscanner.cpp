@@ -1,6 +1,10 @@
 #include "headers/TCPscanner.hpp"
 #include <iostream>
 
+TCP_scanner::~TCP_scanner() noexcept {
+    free(_TcpTableHolder.release());
+}
+
 [[nodiscard]] TCP_scanner::TCP_scanner(bool order) noexcept {
     
     PMIB_TCPTABLE return_table_as_raw;
