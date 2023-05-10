@@ -39,7 +39,6 @@ void TCP_scanner::print_ports(PortState port_state) const noexcept {
         }
     }
 }
-<<<<<<< HEAD
 
 void TCP_scanner::print_ports_ranged(int low_range, int high_range) const noexcept {
     auto raw = *(_TcpTableHolder);
@@ -72,5 +71,3 @@ void TCP_scanner::print_port_specified(int port) const noexcept {
         printf("There is no such TCP port [ %u ] to examine\n", port);
     }
 }
-=======
->>>>>>> 6616c364b975624a06fffab1b39b3d7e4881c645
