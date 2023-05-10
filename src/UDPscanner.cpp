@@ -33,6 +33,7 @@ void UDP_scanner::print_ports() const noexcept {
         printf("(UDP) Port %u is open\n", ntohs(pUdpRow->dwLocalPort));
     }
 }
+<<<<<<< HEAD
 
 void UDP_scanner::print_ports_ranged(int low_range, int high_range) const noexcept {
     auto raw = *(_UdpTableHolder);
@@ -65,3 +66,5 @@ void UDP_scanner::print_port_specified(int port) const noexcept {
         printf("There is no such UDP port [ %u ] to examine\n", port);
     }
 }
+=======
+>>>>>>> 6616c364b975624a06fffab1b39b3d7e4881c645
