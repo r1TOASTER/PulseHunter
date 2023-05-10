@@ -8,8 +8,11 @@
 class UDP_scanner {
     public:
         [[nodiscard]] UDP_scanner(bool order) noexcept;
-        void print_ports() const noexcept;
         ~UDP_scanner() noexcept;
+        
+        void print_ports() const noexcept;
+        void print_ports_ranged(int low_range, int high_range) const noexcept;
+        void print_port_specified(int port) const noexcept;
     private:
         std::unique_ptr<PMIB_UDPTABLE> _UdpTableHolder;
 };

@@ -39,3 +39,35 @@ void TCP_scanner::print_ports(PortState port_state) const noexcept {
         }
     }
 }
+
+void TCP_scanner::print_ports_ranged(int low_range, int high_range) const noexcept {
+    auto raw = *(_TcpTableHolder);
+    int count = 0;
+    for (int i = 0; i < static_cast<int>(raw->dwNumEntries); ++i) {
+        MIB_TCPROW* pTcpRow = &(raw->table[i]);
+        auto current_port = ntohs(pTcpRow->dwLocalPort);
+        if ((current_port >= low_range) && (current_port <= high_range)) {
+            count++;
+            printf("(TCP) Port %u is in the state: %s\n", current_port, _port_state_to_string(static_cast<PortState>(pTcpRow->dwState)).c_str());
+        }
+    }
+    if (count == 0) {
+        printf("There are no TCP ports in the range [ %d - %d ] to examine\n", low_range, high_range);
+    }
+}
+
+void TCP_scanner::print_port_specified(int port) const noexcept {
+    auto raw = *(_TcpTableHolder);
+    int count = 0;
+    for (int i = 0; i < static_cast<int>(raw->dwNumEntries); ++i) {
+        MIB_TCPROW* pTcpRow = &(raw->table[i]);
+        auto current_port = ntohs(pTcpRow->dwLocalPort);
+        if (port == current_port) {
+            count++;
+            printf("(TCP) Port %u is in the state: %s\n", current_port, _port_state_to_string(static_cast<PortState>(pTcpRow->dwState)).c_str());
+        }
+    }
+    if (count == 0) {
+        printf("There is no such TCP port [ %u ] to examine\n", port);
+    }
+}
