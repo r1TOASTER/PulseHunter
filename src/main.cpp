@@ -31,7 +31,7 @@ void _examine_tcp_ports() noexcept {
             break;
         }
         default:
-            std::cout << "Invalid choice. Returning to menu." << std::endl;
+            std::cout << "Invalid choice. Returning to menu.\n" << std::endl;
             break;
     }
 }
@@ -64,7 +64,7 @@ void _examine_udp_ports() noexcept {
             break;
         }
         default:
-            std::cout << "Invalid choice. Returning to menu." << std::endl;
+            std::cout << "Invalid choice. Returning to menu.\n" << std::endl;
             break;
     }
 }
@@ -91,10 +91,10 @@ int main() {
         case 4:
             break;
         default:
-            std::cout << "Invalid choice. Please try again." << std::endl;
+            std::cout << "Invalid choice. Please try again.\n" << std::endl;
             break;
         }
     }
-    std::cout << "Exiting PulseHunter." << std::endl;
+    std::cout << "Exiting PulseHunter.\n" << std::endl;
     return 0;
 }

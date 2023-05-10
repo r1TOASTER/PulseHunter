@@ -2,7 +2,7 @@
 #include <iostream>
 
 int _main_menu_usage() noexcept {
-    std::cout << "\nPulseHunter" << std::endl;
+    std::cout << "PulseHunter" << std::endl;
     std::cout << "To use PulseHunter, please enter one of the following options:" << std::endl;
     std::cout << "1. Examine a specific TCP ports (single or more)" << std::endl;
     std::cout << "2. Examine a specific UDP ports (single or more)" << std::endl;
