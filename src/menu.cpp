@@ -87,7 +87,7 @@ _flags_info process_flags(const int argc, char* argv[]) noexcept {
                   }
             } 
             else {
-                std::cerr << "Missing argument for -m flag" << std::endl;
+                std::cerr << "Missing argument for -m flag, setting all modes as the default" << std::endl;
             }   
         }
         else if (arg == "-r") {
@@ -105,7 +105,7 @@ _flags_info process_flags(const int argc, char* argv[]) noexcept {
                     _fatal("Invalid argument provided for -r flag");
                 }
             } else {
-                std::cerr << "Invalid number of arguments for -r flag" << std::endl;
+                _fatal("Invalid number of arguments for -r flag");
             }
         } else if (arg == "-s") {
             if (i < argc - 1) {
@@ -115,13 +115,13 @@ _flags_info process_flags(const int argc, char* argv[]) noexcept {
                     _fatal("Invalid argument provided for -s flag");
                 }
             } else {
-                std::cerr << "Invalid number of arguments for -s flag" << std::endl;
+                _fatal("Invalid number of arguments for -s flag");
             }
         } else if (arg == "-i") {
             if (i < argc - 1) {
                 ip_address = argv[++i];
             } else {
-                std::cerr << "Invalid number of arguments for -i flag" << std::endl;
+                _fatal("Invalid number of arguments for -i flag");
             }
         }
     }
