@@ -22,7 +22,7 @@ To use PulseHunter, simply run the executable file and follow the prompts. The p
 Future updates to the program will include:
 
 - [x] User interface
-- [ ] Scanning ports by their status
+- [x] Scanning ports by their status
 - [ ] Scanning IP addresses that are open for the ports (host/source)
 
 ## License
