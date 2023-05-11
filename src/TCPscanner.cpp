@@ -27,17 +27,8 @@ TCP_scanner::~TCP_scanner() noexcept {
     _TcpTableHolder = std::make_unique<PMIB_TCPTABLE>(return_table_as_raw);
 }
 
-void TCP_scanner::print_ports(PortState port_state) const noexcept {
-    auto raw = *(_TcpTableHolder);
-    for (int i = 0; i < static_cast<int>(raw->dwNumEntries); ++i) {
-        MIB_TCPROW* pTcpRow = &(raw->table[i]);
-        if (port_state == PortState::ALL) {
-            printf("(TCP) Port %u is in the state: %s\n", ntohs(pTcpRow->dwLocalPort), _port_state_to_string(static_cast<PortState>(pTcpRow->dwState)).c_str());
-        }
-        else if (pTcpRow->dwState == static_cast<DWORD>(port_state)) {
-            printf("(TCP) Port %u is in the state: %s\n", ntohs(pTcpRow->dwLocalPort), _port_state_to_string(port_state).c_str());
-        }
-    }
+void TCP_scanner::set_port_state(const PortState port_state) noexcept {
+    _portState = port_state;
 }
 
 void TCP_scanner::print_ports_ranged(int low_range, int high_range) const noexcept {
@@ -48,7 +39,12 @@ void TCP_scanner::print_ports_ranged(int low_range, int high_range) const noexce
         auto current_port = ntohs(pTcpRow->dwLocalPort);
         if ((current_port >= low_range) && (current_port <= high_range)) {
             count++;
-            printf("(TCP) Port %u is in the state: %s\n", current_port, _port_state_to_string(static_cast<PortState>(pTcpRow->dwState)).c_str());
+            if (_portState == PortState::ALL) {
+                printf("(TCP) Port %u is in the state: %s\n", ntohs(pTcpRow->dwLocalPort), _port_state_to_string(static_cast<PortState>(pTcpRow->dwState)).c_str());
+            }
+            else if (pTcpRow->dwState == static_cast<DWORD>(_portState)) {
+                printf("(TCP) Port %u is in the state: %s\n", ntohs(pTcpRow->dwLocalPort), _port_state_to_string(_portState).c_str());
+            }
         }
     }
     if (count == 0) {
@@ -62,9 +58,14 @@ void TCP_scanner::print_port_specified(int port) const noexcept {
     for (int i = 0; i < static_cast<int>(raw->dwNumEntries); ++i) {
         MIB_TCPROW* pTcpRow = &(raw->table[i]);
         auto current_port = ntohs(pTcpRow->dwLocalPort);
-        if (port == current_port) {
+        if (port == current_port) { // the specified port is found
             count++;
-            printf("(TCP) Port %u is in the state: %s\n", current_port, _port_state_to_string(static_cast<PortState>(pTcpRow->dwState)).c_str());
+            if (_portState == PortState::ALL) {
+                printf("(TCP) Port %u is in the state: %s\n", ntohs(pTcpRow->dwLocalPort), _port_state_to_string(static_cast<PortState>(pTcpRow->dwState)).c_str());
+            }
+            else if (pTcpRow->dwState == static_cast<DWORD>(_portState)) {
+                printf("(TCP) Port %u is in the state: %s\n", ntohs(pTcpRow->dwLocalPort), _port_state_to_string(_portState).c_str());
+            }
         }
     }
     if (count == 0) {
