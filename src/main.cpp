@@ -2,6 +2,7 @@
 #include "headers/UDPscanner.hpp"
 #include "headers/menu.hpp"
 #include <stdio.h>
+#include <vector>
 
 void _examine_tcp_ports() noexcept {
     std::cout << "Enter 1 for examining a range of TCP ports, and 2 for a single port" << std::endl;
@@ -72,29 +73,12 @@ void _examine_ip_address() noexcept {
     return;
 }
 
-int main() {
-    auto choice = 0;
-    while (choice != 4) {
-        choice = _main_menu_usage();
-        switch (choice) {
-        case 1:
-            // Call a function to examine a specific TCP ports
-            _examine_tcp_ports();
-            break;
-        case 2:
-            // Call a function to examine a specific UDP ports
-            _examine_udp_ports();
-            break;
-        case 3:
-            // Call a function to examine a specific IP address 
-            _examine_ip_address();
-        case 4:
-            break;
-        default:
-            std::cout << "Invalid choice. Please try again.\n" << std::endl;
-            break;
-        }
+int main(int argc, char* argv[]) {
+    _flags_info flags_info = process_flags(argc, argv);
+
+    if (_flags_empty(flags_info)) {
+        _fatal("Invalid flags provided");
     }
-    std::cout << "Exiting PulseHunter.\n" << std::endl;
+    // TODO: flags checking
     return 0;
 }
