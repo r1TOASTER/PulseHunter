@@ -101,6 +101,12 @@ _flags_info process_flags(const int argc, char* argv[]) noexcept {
                         range_start = range_end;
                         range_end = reverse;
                     }
+                    if (range_end < 0) {
+                        range_end = 0;
+                    }
+                    if (range_start < 0) {
+                        range_start = 0;
+                    }
                 } catch (const std::invalid_argument& e) {
                     _fatal("Invalid argument provided for -r flag");
                 }

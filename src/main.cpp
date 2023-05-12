@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) {
     if (_flags_empty(flags_info)) {
         _fatal("Invalid flags provided");
     }
-
+    
     // for each flag (tcp, udp, ipv4 address) - if set, examine it
     if (flags_info.tcp_enabled) {
         _examine_tcp_ports(flags_info);
