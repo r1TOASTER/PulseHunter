@@ -6,6 +6,7 @@
 
 void _examine_tcp_ports(_flags_info flags_info) noexcept {
     auto tcp_scanner = TCP_scanner(true);
+    std::cout << "\nTCP SECTION: \n";
     // if no modes specified, all modes for ports is the default
     if (flags_info.modes.size() == 0) {
         flags_info.modes.push_back(PortState::ALL);
@@ -19,18 +20,25 @@ void _examine_tcp_ports(_flags_info flags_info) noexcept {
         if (flags_info.ranges.second != 0) {
             tcp_scanner.print_ports_ranged(flags_info.ranges.first, flags_info.ranges.second);
         }
+        else if (flags_info.ranges.second == 0 && flags_info.single_port == 0) {
+            tcp_scanner.print_ports();
+        }
     }
-    std::cout << "------------------------------------------------------------\n";
+    std::cout << "\n";
 }
 void _examine_udp_ports(const _flags_info flags_info) noexcept {
     auto udp_scanner = UDP_scanner(true);
+    std::cout << "\nUDP SECTION: \n";
     if (flags_info.single_port != 0) {
         udp_scanner.print_port_specified(flags_info.single_port);
     }
     if (flags_info.ranges.second != 0) {
         udp_scanner.print_ports_ranged(flags_info.ranges.first, flags_info.ranges.second);
     }
-    std::cout << "------------------------------------------------------------\n";
+    else if (flags_info.ranges.second == 0 && flags_info.single_port == 0) {
+        udp_scanner.print_ports();
+    }
+    std::cout << "\n";
 }
 void _examine_ip_address(const _flags_info flags_info) noexcept {
     return;

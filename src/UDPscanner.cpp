@@ -30,7 +30,8 @@ void UDP_scanner::print_ports() const noexcept {
     auto raw = *(_UdpTableHolder);
     for (int i = 0; i < static_cast<int>(raw->dwNumEntries); i++) {
         MIB_UDPROW* pUdpRow = &(raw->table[i]);
-        printf("(UDP) Port %u is open\n", ntohs(pUdpRow->dwLocalPort));
+        auto current_port = ntohs(pUdpRow->dwLocalPort);
+        printf("(UDP) Port %u is open\n", current_port);
     }
 }
 
@@ -42,7 +43,7 @@ void UDP_scanner::print_ports_ranged(int low_range, int high_range) const noexce
         auto current_port = ntohs(pUdpRow->dwLocalPort);
         if ((current_port >= low_range) && (current_port <= high_range)) {
             count++;
-            printf("(UDP) Port %u is open\n", ntohs(pUdpRow->dwLocalPort));
+            printf("(UDP) Port %u is open\n", current_port);
         }
     }
     if (count == 0) {
