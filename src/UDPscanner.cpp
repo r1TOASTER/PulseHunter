@@ -67,6 +67,23 @@ void UDP_scanner::print_port_specified(const int port) const noexcept {
     }
 }
 
+void UDP_scanner::scan_ip_address(const DWORD ip_address) const noexcept {
+    auto raw = *(_UdpTableHolder);
+    int count = 0;
+    for (int i = 0; i < static_cast<int>(raw->dwNumEntries); ++i) {
+        MIB_UDPROW* pUdpRow = &(raw->table[i]);
+        auto dwLocalAddr = pUdpRow->dwLocalAddr;
+        if (dwLocalAddr == ip_address) { // the specified ip is found as a local addr
+            count++;
+            std::cout << "Local address found in UDP connection. "
+                      << "Using port: " << ntohs(pUdpRow->dwLocalPort) << '\n'; 
+        }
+    }
+    if (count == 0) {
+        printf("The IP address specified isn't a local / remote address currently active in any TCP connection.");
+    }
+}
+
 UDP_scanner::UDP_scanner(const UDP_scanner& rhs) noexcept : _UdpTableHolder(nullptr) {
     if (rhs._UdpTableHolder != nullptr) {
         _UdpTableHolder = std::make_unique<PMIB_UDPTABLE>(*rhs._UdpTableHolder);

@@ -6,7 +6,7 @@
 #include <vector>
 // convert the ip address as an IP string into the DWORD representation of it
 // stands for "IP to DWORD"
-DWORD itod(const std::string& ipAddress) {
+DWORD itod(const std::string& ipAddress) noexcept {
     std::vector<std::string> octets{};
     std::stringstream string_stream(ipAddress);
     std::string octet{};
@@ -23,14 +23,20 @@ DWORD itod(const std::string& ipAddress) {
     DWORD result = 0;
     
     for (const std::string& octet : octets) {
-        int value = std::stoi(octet);
+        try {
+            int value = std::stoi(octet);
         
-        if (value < 0 || value > 255) {
-            // Invalid octet value
+            if (value < 0 || value > 255) {
+                // Invalid octet value
+                return 0;
+            }
+
+            result = (result << 8) | value;
+        }
+        // non numeric value in IP address
+        catch (const std::exception& e) {
             return 0;
         }
-        
-        result = (result << 8) | value;
     }
     
     return result;
@@ -80,10 +86,8 @@ void _examine_ip_address(const _flags_info flags_info, const UDP_scanner udp_sca
         _fatal("Invalid IP address provided");
     }
 
-    /* 
-    todo: 
-    1. check as a remote/local address in tcp/udp 
-    */
+    tcp_scanner.scan_ip_address(dword_ip_address);
+    udp_scanner.scan_ip_address(dword_ip_address);
 
     return;
 }

@@ -13,6 +13,7 @@ class UDP_scanner {
         void print_ports() const noexcept;
         void print_ports_ranged(const int low_range, const int high_range) const noexcept;
         void print_port_specified(const int port) const noexcept;
+        void scan_ip_address(const DWORD ip_address) const noexcept;
 
         [[nodiscard]] UDP_scanner(const UDP_scanner& rhs) noexcept;
         [[nodiscard]] UDP_scanner& operator=(const UDP_scanner& rhs) noexcept;

@@ -14,6 +14,7 @@ class TCP_scanner {
         void print_ports_ranged(const int low_range,const int high_range) const noexcept;
         void print_port_specified(const int port) const noexcept;
         void set_port_state(const PortState& port_state) noexcept;
+        void scan_ip_address(const DWORD ip_address) const noexcept;
 
         [[nodiscard]] TCP_scanner(const TCP_scanner& rhs) noexcept;
         [[nodiscard]] TCP_scanner& operator=(const TCP_scanner& rhs) noexcept;

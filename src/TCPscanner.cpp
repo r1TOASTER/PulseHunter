@@ -87,6 +87,29 @@ void TCP_scanner::print_port_specified(const int port) const noexcept {
     }
 }
 
+void TCP_scanner::scan_ip_address(const DWORD ip_address) const noexcept {
+    auto raw = *(_TcpTableHolder);
+    int count = 0;
+    for (int i = 0; i < static_cast<int>(raw->dwNumEntries); ++i) {
+        MIB_TCPROW* pTcpRow = &(raw->table[i]);
+        auto dwLocalAddr = pTcpRow->dwLocalAddr;
+        auto dwRemoteAddr = pTcpRow->dwRemoteAddr;
+        if (dwLocalAddr == ip_address) { // the specified ip is found as a local addr
+            count++;
+            std::cout << "Local address found in TCP connection. "
+                      << "Using port: " << ntohs(pTcpRow->dwLocalPort) << '\n'; 
+        }
+        else if (dwRemoteAddr == ip_address) { // the specified ip is found as a local addr
+            count++;
+            std::cout << "Remote address found in TCP connection. "
+                      << "Using port: " << ntohs(pTcpRow->dwLocalPort) << '\n'; 
+        }
+    }
+    if (count == 0) {
+        printf("The IP address specified isn't a local / remote address currently active in any TCP connection.");
+    }
+}
+
 TCP_scanner::TCP_scanner(const TCP_scanner& rhs) noexcept : _TcpTableHolder(nullptr) {
     if (rhs._TcpTableHolder != nullptr) {
         _TcpTableHolder = std::make_unique<PMIB_TCPTABLE>(*rhs._TcpTableHolder);
