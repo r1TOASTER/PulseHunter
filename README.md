@@ -23,7 +23,7 @@ Future updates to the program will include:
 
 - [x] User interface
 - [x] Scanning ports by their status
-- [ ] Scanning IP addresses that are open for the ports (host/source)
+- [x] Scanning IP addresses that are open for the ports (host/source)
 
 ## License
 
