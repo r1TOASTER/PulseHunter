@@ -106,7 +106,7 @@ void TCP_scanner::scan_ip_address(const DWORD ip_address) const noexcept {
         }
     }
     if (count == 0) {
-        printf("The IP address specified isn't a local / remote address currently active in any TCP connection.");
+        printf("The IP address specified isn't a local / remote address currently active in any TCP connection.\n");
     }
 }
 
