@@ -81,11 +81,11 @@ void _examine_udp_ports(const _flags_info flags_info, const UDP_scanner udp_scan
 void _examine_ip_address(const _flags_info flags_info, const UDP_scanner udp_scanner,
                          const TCP_scanner tcp_scanner) noexcept {
     DWORD dword_ip_address = itod(flags_info.ip_address);
-    std::cout << "\nIP ADDRESS SECTION: \n";
     if (!dword_ip_address) {
         _fatal("Invalid IP address provided");
     }
 
+    std::cout << "\nIP ADDRESS SECTION: \n";
     tcp_scanner.scan_ip_address(dword_ip_address);
     udp_scanner.scan_ip_address(dword_ip_address);
 
