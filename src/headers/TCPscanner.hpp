@@ -15,8 +15,8 @@ class TCP_scanner {
         void print_port_specified(int port) const noexcept;
         void set_port_state(const PortState port_state) noexcept;
 
-        TCP_scanner(const TCP_scanner& rhs) noexcept;
-        TCP_scanner& operator=(const TCP_scanner& rhs) noexcept;
+        [[nodiscard]] TCP_scanner(const TCP_scanner& rhs) noexcept;
+        [[nodiscard]] TCP_scanner& operator=(const TCP_scanner& rhs) noexcept;
     private:
         std::unique_ptr<PMIB_TCPTABLE> _TcpTableHolder;
         PortState _portState = PortState::ALL;

@@ -14,8 +14,8 @@ class UDP_scanner {
         void print_ports_ranged(int low_range, int high_range) const noexcept;
         void print_port_specified(int port) const noexcept;
 
-        UDP_scanner(const UDP_scanner& rhs) noexcept;
-        UDP_scanner& operator=(const UDP_scanner& rhs) noexcept;
+        [[nodiscard]] UDP_scanner(const UDP_scanner& rhs) noexcept;
+        [[nodiscard]] UDP_scanner& operator=(const UDP_scanner& rhs) noexcept;
     private:
         std::unique_ptr<PMIB_UDPTABLE> _UdpTableHolder;
 };
