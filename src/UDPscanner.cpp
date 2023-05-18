@@ -35,7 +35,7 @@ void UDP_scanner::print_ports() const noexcept {
     }
 }
 
-void UDP_scanner::print_ports_ranged(int low_range, int high_range) const noexcept {
+void UDP_scanner::print_ports_ranged(const int low_range, const int high_range) const noexcept {
     auto raw = *(_UdpTableHolder);
     int count = 0;
     for (int i = 0; i < static_cast<int>(raw->dwNumEntries); i++) {
@@ -51,7 +51,7 @@ void UDP_scanner::print_ports_ranged(int low_range, int high_range) const noexce
     }
 }
 
-void UDP_scanner::print_port_specified(int port) const noexcept {
+void UDP_scanner::print_port_specified(const int port) const noexcept {
     auto raw = *(_UdpTableHolder);
     int count = 0;
     for (int i = 0; i < static_cast<int>(raw->dwNumEntries); i++) {

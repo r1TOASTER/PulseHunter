@@ -27,7 +27,7 @@ TCP_scanner::~TCP_scanner() noexcept {
     _TcpTableHolder = std::make_unique<PMIB_TCPTABLE>(return_table_as_raw);
 }
 
-void TCP_scanner::set_port_state(const PortState port_state) noexcept {
+void TCP_scanner::set_port_state(const PortState& port_state) noexcept {
     _portState = port_state;
 }
 
@@ -45,7 +45,7 @@ void TCP_scanner::print_ports() const noexcept {
     }
 }
 
-void TCP_scanner::print_ports_ranged(int low_range, int high_range) const noexcept {
+void TCP_scanner::print_ports_ranged(const int low_range,const int high_range) const noexcept {
     auto raw = *(_TcpTableHolder);
     int count = 0;
     for (int i = 0; i < static_cast<int>(raw->dwNumEntries); ++i) {
@@ -66,7 +66,7 @@ void TCP_scanner::print_ports_ranged(int low_range, int high_range) const noexce
     }
 }
 
-void TCP_scanner::print_port_specified(int port) const noexcept {
+void TCP_scanner::print_port_specified(const int port) const noexcept {
     auto raw = *(_TcpTableHolder);
     int count = 0;
     for (int i = 0; i < static_cast<int>(raw->dwNumEntries); ++i) {

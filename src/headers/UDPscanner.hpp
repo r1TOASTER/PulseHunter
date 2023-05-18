@@ -11,8 +11,8 @@ class UDP_scanner {
         ~UDP_scanner() noexcept;
         
         void print_ports() const noexcept;
-        void print_ports_ranged(int low_range, int high_range) const noexcept;
-        void print_port_specified(int port) const noexcept;
+        void print_ports_ranged(const int low_range, const int high_range) const noexcept;
+        void print_port_specified(const int port) const noexcept;
 
         [[nodiscard]] UDP_scanner(const UDP_scanner& rhs) noexcept;
         [[nodiscard]] UDP_scanner& operator=(const UDP_scanner& rhs) noexcept;
