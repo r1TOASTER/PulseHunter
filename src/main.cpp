@@ -3,44 +3,8 @@
 #include "headers/menu.hpp"
 #include <stdio.h>
 #include <sstream>
+#include <optional>
 #include <vector>
-// convert the ip address as an IP string into the DWORD representation of it
-// stands for "IP to DWORD"
-DWORD itod(const std::string& ipAddress) noexcept {
-    std::vector<std::string> octets{};
-    std::stringstream string_stream(ipAddress);
-    std::string octet{};
-    
-    while (std::getline(string_stream, octet, '.')) {
-        octets.push_back(octet);
-    }
-    
-    if (octets.size() != 4) {
-        // Invalid IP address format
-        return 0;
-    }
-    
-    DWORD result = 0;
-    
-    for (const std::string& octet : octets) {
-        try {
-            int value = std::stoi(octet);
-        
-            if (value < 0 || value > 255) {
-                // Invalid octet value
-                return 0;
-            }
-
-            result = (result << 8) | value;
-        }
-        // non numeric value in IP address
-        catch (const std::exception& e) {
-            return 0;
-        }
-    }
-    
-    return result;
-}
 
 void _examine_tcp_ports(_flags_info flags_info, TCP_scanner tcp_scanner) noexcept {
     std::cout << "\nTCP SECTION: \n";
@@ -80,13 +44,14 @@ void _examine_udp_ports(const _flags_info flags_info, const UDP_scanner udp_scan
 
 void _examine_ip_address(const _flags_info flags_info, const UDP_scanner udp_scanner,
                          const TCP_scanner tcp_scanner) noexcept {
-    DWORD dword_ip_address = itod(flags_info.ip_address);
-    if (!dword_ip_address) {
+    DWORD dword_ip_address = inet_addr(flags_info.ip_address.c_str());
+    if (dword_ip_address == INADDR_NONE) {
         _fatal("Invalid IP address provided");
     }
 
     std::cout << "\nIP ADDRESS SECTION: \n";
     tcp_scanner.scan_ip_address(dword_ip_address);
+    std::cout << '\n';
     udp_scanner.scan_ip_address(dword_ip_address);
 
     std::cout << "\n";
