@@ -66,3 +66,22 @@ void UDP_scanner::print_port_specified(int port) const noexcept {
         printf("There is no such UDP port [ %u ] to examine\n", port);
     }
 }
+
+UDP_scanner::UDP_scanner(const UDP_scanner& rhs) noexcept : _UdpTableHolder(nullptr) {
+    if (rhs._UdpTableHolder != nullptr) {
+        _UdpTableHolder = std::make_unique<PMIB_UDPTABLE>(*rhs._UdpTableHolder);
+    }
+}
+
+UDP_scanner& UDP_scanner::operator=(const UDP_scanner& rhs) noexcept {
+    if (!rhs._UdpTableHolder) {
+        _UdpTableHolder.reset();
+    }
+    else if (!_UdpTableHolder) {
+        _UdpTableHolder = std::make_unique<PMIB_UDPTABLE>(*rhs._UdpTableHolder);
+    }
+    else {
+        *_UdpTableHolder = *rhs._UdpTableHolder;
+    }
+    return *this;
+}

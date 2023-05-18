@@ -86,3 +86,22 @@ void TCP_scanner::print_port_specified(int port) const noexcept {
         printf("There is no such TCP port [ %u ] to examine\n", port);
     }
 }
+
+TCP_scanner::TCP_scanner(const TCP_scanner& rhs) noexcept : _TcpTableHolder(nullptr) {
+    if (rhs._TcpTableHolder != nullptr) {
+        _TcpTableHolder = std::make_unique<PMIB_TCPTABLE>(*rhs._TcpTableHolder);
+    }
+}
+
+TCP_scanner& TCP_scanner::operator=(const TCP_scanner& rhs) noexcept {
+    if (!rhs._TcpTableHolder) {
+        _TcpTableHolder.reset();
+    }
+    else if (!_TcpTableHolder) {
+        _TcpTableHolder = std::make_unique<PMIB_TCPTABLE>(*rhs._TcpTableHolder);
+    }
+    else {
+        *_TcpTableHolder = *rhs._TcpTableHolder;
+    }
+    return *this;
+}
