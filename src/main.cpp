@@ -2,7 +2,39 @@
 #include "headers/UDPscanner.hpp"
 #include "headers/menu.hpp"
 #include <stdio.h>
+#include <sstream>
 #include <vector>
+// convert the ip address as an IP string into the DWORD representation of it
+// stands for "IP to DWORD"
+DWORD itod(const std::string& ipAddress) {
+    std::vector<std::string> octets{};
+    std::stringstream string_stream(ipAddress);
+    std::string octet{};
+    
+    while (std::getline(string_stream, octet, '.')) {
+        octets.push_back(octet);
+    }
+    
+    if (octets.size() != 4) {
+        // Invalid IP address format
+        return 0;
+    }
+    
+    DWORD result = 0;
+    
+    for (const std::string& octet : octets) {
+        int value = std::stoi(octet);
+        
+        if (value < 0 || value > 255) {
+            // Invalid octet value
+            return 0;
+        }
+        
+        result = (result << 8) | value;
+    }
+    
+    return result;
+}
 
 void _examine_tcp_ports(_flags_info flags_info, TCP_scanner tcp_scanner) noexcept {
     std::cout << "\nTCP SECTION: \n";
@@ -25,6 +57,7 @@ void _examine_tcp_ports(_flags_info flags_info, TCP_scanner tcp_scanner) noexcep
     }
     std::cout << "\n";
 }
+
 void _examine_udp_ports(const _flags_info flags_info, const UDP_scanner udp_scanner) noexcept {
     std::cout << "\nUDP SECTION: \n";
     if (flags_info.single_port != 0) {
@@ -38,13 +71,18 @@ void _examine_udp_ports(const _flags_info flags_info, const UDP_scanner udp_scan
     }
     std::cout << "\n";
 }
+
 void _examine_ip_address(const _flags_info flags_info, const UDP_scanner udp_scanner,
                          const TCP_scanner tcp_scanner) noexcept {
+    DWORD dword_ip_address = itod(flags_info.ip_address);
+    
+    if (!dword_ip_address) {
+        _fatal("Invalid IP address provided");
+    }
 
     /* 
     todo: 
-    1. flags_info.ip_address string - check as an ip v4 address 
-    2. check as a remote/local address in tcp/udp 
+    1. check as a remote/local address in tcp/udp 
     */
 
     return;
