@@ -110,13 +110,13 @@ void TCP_scanner::scan_ip_address(const DWORD ip_address) const noexcept {
     }
 }
 
-TCP_scanner::TCP_scanner(const TCP_scanner& rhs) noexcept : _TcpTableHolder(nullptr) {
+[[nodiscard]] TCP_scanner::TCP_scanner(const TCP_scanner& rhs) noexcept : _TcpTableHolder(nullptr) {
     if (rhs._TcpTableHolder != nullptr) {
         _TcpTableHolder = std::make_unique<PMIB_TCPTABLE>(*rhs._TcpTableHolder);
     }
 }
 
-TCP_scanner& TCP_scanner::operator=(const TCP_scanner& rhs) noexcept {
+[[nodiscard]] TCP_scanner& TCP_scanner::operator=(const TCP_scanner& rhs) noexcept {
     if (!rhs._TcpTableHolder) {
         _TcpTableHolder.reset();
     }

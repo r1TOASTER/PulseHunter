@@ -84,13 +84,13 @@ void UDP_scanner::scan_ip_address(const DWORD ip_address) const noexcept {
     }
 }
 
-UDP_scanner::UDP_scanner(const UDP_scanner& rhs) noexcept : _UdpTableHolder(nullptr) {
+[[nodiscard]] UDP_scanner::UDP_scanner(const UDP_scanner& rhs) noexcept : _UdpTableHolder(nullptr) {
     if (rhs._UdpTableHolder != nullptr) {
         _UdpTableHolder = std::make_unique<PMIB_UDPTABLE>(*rhs._UdpTableHolder);
     }
 }
 
-UDP_scanner& UDP_scanner::operator=(const UDP_scanner& rhs) noexcept {
+[[nodiscard]] UDP_scanner& UDP_scanner::operator=(const UDP_scanner& rhs) noexcept {
     if (!rhs._UdpTableHolder) {
         _UdpTableHolder.reset();
     }
